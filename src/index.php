@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">	
 	<link rel="stylesheet" href="css/style.css"/>
+	<link href='http://fonts.googleapis.com/css?family=Arvo:700italic' rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<header class="container">
@@ -14,15 +15,26 @@
 		</div>
 	</header>
 	<section class="container main">
+		<div id="headerBar" class="row">
+			<div class="col-xs-3">
+				
+			</div>
+			<div class="col-xs-6">
+				<p>Enter your summoner name and start tracking!</p>
+			</div>
+			<div class="col-xs-3">
+				
+			</div>
+		</div>
 		<div id="inputBar" class="row">
 			<article class="col-xs-12">
 				<div class="input-group">
 					<div class="input-group-btn">
 				        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Server <span class="glyphicon glyphicon-collapse-down"></span></button>
 				        <ul class="dropdown-menu">
-				          <li><a href="#" class="serverOption">Europe West</a></li>
-				          <li><a href="#" class="serverOption">Europe East & Nordic</a></li>
-				          <li><a href="#" class="serverOption">North America</a></li>
+				          <li><a href="#" class="serverOption" data-chosen="false">Europe West</a></li>
+				          <li><a href="#" class="serverOption" data-chosen="false">Europe East and Nordic</a></li>
+				          <li><a href="#" class="serverOption" data-chosen="false">North America</a></li>
 				        </ul>
 		      		</div>
 			  		<input type="text" onchange="checkInput()" id="input" class="form-control" placeholder="Enter your summoner name...">
@@ -33,10 +45,17 @@
 			</article>
 		</div>
 		
-		<div class="container">
-			<div class="summonerInfo">
+		<div id="bottomBar" class="row">
+			<div class="col-xs-3">
+				
+			</div>
+			<div class="col-xs-6">
+			</div>
+			<div class="col-xs-3">
+				
 			</div>
 		</div>
+
 		
 		<div class="row">
 			<footer class="col-xs-12">
@@ -52,14 +71,3 @@
 	<script src="scripts/script.js"></script>
 </body>
 </html>
-
-<?php 
-	include("functions.php");
-
-	setSummoner("tr0yz","euw");
-
-	echo "$id \n";
-	echo "$name \n";
-	echo "$iconID \n";
-	echo "$level \n";
-?>
