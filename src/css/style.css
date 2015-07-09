@@ -49,3 +49,21 @@ footer
 	padding-top: 8%;
 	padding-bottom: 8%;
 }
+
+#errors
+{
+	background-color: #FA5858;
+	width: 50%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.summInfo
+{
+	float: left;
+}
+
+#summName
+{
+	margin-left: 10px;
+}

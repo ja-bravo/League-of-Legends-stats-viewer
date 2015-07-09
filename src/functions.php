@@ -5,19 +5,20 @@
 	$name;
 	$iconID;
 	$level;
+	$rankedLeague;
 
 	function setSummoner($summonerName,$server)
 	{
-		global $apiKey, $id, $name, $iconID, $level;
+		global $apiKey, $id, $name, $iconID, $level,$rankedLeague;
 
 		$url = 'https://'.$server.'.api.pvp.net/api/lol/'.$server.'/v1.4/summoner/by-name/' . $summonerName . '?api_key=' . $apiKey;
 		$response = file_get_contents($url);
 
 		$stats = json_decode($response)->$summonerName;
-
 		$id = $stats->id;
 		$name = $stats->name;
 		$iconID = $stats->profileIconId;
 		$level = $stats->summonerLevel;
 	}
+
  ?>

@@ -30,7 +30,7 @@
 			<article class="col-xs-12">
 				<div class="input-group">
 					<div class="input-group-btn">
-				        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Server <span class="glyphicon glyphicon-collapse-down"></span></button>
+				        <button type="button" id="chosenServer" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Server <span class="glyphicon glyphicon-collapse-down"></span></button>
 				        <ul class="dropdown-menu">
 				          <li><a href="#" class="serverOption" data-chosen="false">Europe West</a></li>
 				          <li><a href="#" class="serverOption" data-chosen="false">Europe East and Nordic</a></li>
@@ -41,6 +41,16 @@
 			  		<div class="input-group-btn">
 				        <button type="button" id="search" class="btn btn-default">Search <span id="readyIcon" class="glyphicon glyphicon-remove-circle"></span></button>
 		      		</div>
+				</div>
+
+				<div id="errors">
+					<div id="serverError" class="error">
+						<p> You need to select a server! </p>
+					</div>
+
+					<div id="nameError" class="error">
+						<p> You need to enter a sumoner name! </p>
+					</div>
 				</div>
 			</article>
 		</div>

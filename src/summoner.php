@@ -17,7 +17,12 @@
 
 	<section class="container main">
 		<div id="summonerInfo">
-			
+			<div id="summImg" class="summInfo">
+				<image height="64" width="64" src="http://avatar.leagueoflegends.com/euw/tr0yz.png" valign="middle"/>
+			</div>
+			<div id="summName" class="summInfo">
+				<h3 id="user"> </h3>
+			</div>
 		</div>
 		<div class="row">
 			<footer class="col-xs-12">
@@ -32,3 +37,20 @@
 	<script src="scripts/script.js"></script>
 </body>
 </html>
+
+<?php 
+	
+	if(isset($_REQUEST['summoner']))
+	{
+		include("functions.php");
+		$summoner = $_REQUEST['summoner'];
+		$server = $_REQUEST['server'];
+
+		setSummoner($summoner,$server);
+
+		echo $rankedLeague;
+		echo "<script> setUser(\"$summoner\",\"$level\"); </script>";
+	}
+
+
+ ?>
