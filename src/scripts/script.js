@@ -64,8 +64,6 @@ $(document).ready(function(){
 		}
 	});
 
-	$
-
 	$(".serverOption").click(function() {
 		var servers = $(".serverOption");
 
@@ -78,9 +76,23 @@ $(document).ready(function(){
 
 		$("#chosenServer").html(this.innerHTML + " <span class=\"glyphicon glyphicon-collapse-down\"></span>");
 	});
+
+	$(".champion").click(function() {
+		$("#champions").fadeOut(500);
+	});
 });
 
 function setUser(user,level)
 {
 	$("#user").html(user);
+}
+
+function displayChampion(image,times)
+{
+	$("#champions").append("<image class=\"champion\" data-timesPlayed=\""+times+"\" height=\"64\" width=\"64\" src=\"images/champions/"+image+"\" valign=\"middle\"/>");
+}
+
+function showError(type)
+{
+	$("#champions").html("<h1> This player has no ranked games this season, play some to track!");
 }
