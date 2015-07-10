@@ -61,14 +61,36 @@
 		<div id="summonerInfo" class="row">
 			<div id="summImg" class="summInfo">
 				<image height="64" width="64" src="images/profileIcon/<?php echo $iconID; ?>.png" valign="middle"/>
+				<div id="level"><?php echo $level; ?></div>
 			</div>
 			<div id="summName" class="summInfo">
 				<h3 id="user"><?php echo $name; ?></h3>
+				<h4 id="league"><?php echo $rankedLeague; ?></h4>
 			</div>
 		</div>
 
-		<div id="champions" class="row">
+		<div class="row">
+			<div class="col-xs-1">
+				
+			</div>
+
+			<div class="col-xs-10" style="text-align: center;">
+				<h1 style="margin: 0;">Champions played on ranked</h1>
+				<h2 style="margin: 0;">Click to see the stats</h2>
+			</div>
+
+			<div class="col-xs-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-1">
 			
+			</div>
+			<div id="champions" class="col-xs-10">
+			
+			</div>
+			<div class="col-xs-1">
+			
+			</div>
 		</div>
 		<div class="row">
 			<footer class="col-xs-12">

@@ -87,12 +87,17 @@ function setUser(user,level)
 	$("#user").html(user);
 }
 
-function displayChampion(image,times)
+function displayChampion(name,image,times)
 {
-	$("#champions").append("<image class=\"champion\" data-timesPlayed=\""+times+"\" height=\"64\" width=\"64\" src=\"images/champions/"+image+"\" valign=\"middle\"/>");
+	$("#champions").append("<image class=\"champion\" data-name=\""+name+"\" data-timesPlayed=\""+times+"\" height=\"64\" width=\"64\" src=\"images/champions/"+image+"\" valign=\"middle\"/>");
 }
 
 function showError(type)
 {
 	$("#champions").html("<h1> This player has no ranked games this season, play some to track!");
+}
+
+function displayStats()
+{
+	
 }

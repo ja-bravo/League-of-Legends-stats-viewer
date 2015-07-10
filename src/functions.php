@@ -1,17 +1,21 @@
 <?php
+	include("champion.php");
 	// Global variables
 	$apiKey = "00b6c5c7-b3cf-4798-b8b9-36cc9512eeb7";
-	$id;
+	$playerID;
 	$name;
 	$iconID;
 	$level;
 	$rankedLeague;
+	$rankedTier;
 	$idToImg = array();
+	$champToTimes = array();
 	$playerServer;
+
 
 	function setSummoner($summonerName,$server)
 	{
-		global $apiKey, $id, $name, $iconID, $level,$rankedLeague,$playerServer;
+		global $apiKey, $playerID, $name, $iconID, $level, $playerServer;
 		$playerServer = $server;
 		$summonerName = str_replace(' ','',$summonerName); // So if the user has spaces in it, it works.
 
@@ -25,7 +29,7 @@
 		$response = file_get_contents($url);
 
 		$stats = json_decode($response)->$summonerName;
-		$id = $stats->id;
+		$playerID = $stats->id;
 		$name = $stats->name;
 		$iconID = $stats->profileIconId;
 		$level = $stats->summonerLevel;
@@ -33,9 +37,9 @@
 
 	function setRankedStats()
 	{
-		global $apiKey,$id,$idToImg,$playerServer;
-		$totalGames;
-		$url = 'https://'.$playerServer.'.api.pvp.net/api/lol/'.$playerServer.'/v1.3/stats/by-summoner/'.$id.'/ranked?season=SEASON2015&api_key='.$apiKey;
+		global $apiKey,$playerID,$idToImg,$playerServer,$champToTimes,$rankedLeague;
+
+		$url = 'https://'.$playerServer.'.api.pvp.net/api/lol/'.$playerServer.'/v1.3/stats/by-summoner/'.$playerID.'/ranked?season=SEASON2015&api_key='.$apiKey;
 		if(get_http_response_code($url) != "200")
 		{
 			echo "<script> showError(\"noRanked\"); </script>";
@@ -59,13 +63,19 @@
 
 		foreach ($champions as $champion) 
 		{
+			$champ = new Champion();
 			$id = $champion->id;
 		    $image = $champion->image;
 		    
 		    $idToImg[$id] = $image->full;
+
+		    $champ->name = $champion->name;
+		    $champ->id = $id;
+		    $champ->image = $image->full;
+
+		    $champToTimes[$champ->id] = $champ;
 		}
 
-		echo "<script>";
 		for($i = 0; $i < count($championsPlayed); $i++)
 		{
 			$championStat = $championsPlayed[$i]->stats;
@@ -76,12 +86,39 @@
 			}
 			else
 			{
-				echo "displayChampion(\"$idToImg[$champID]\",\"$championStat->totalSessionsPlayed\");";
+				$champToTimes[$champID]->timesPlayed = $championStat->totalSessionsPlayed;
+			}
+		}
+
+		usort($champToTimes,"sortChamps");
+		echo "<script>";
+		foreach($champToTimes as $champion => $value)
+		{
+			if(isset($value->timesPlayed))
+			{
+				echo "displayChampion(\"$value->name\",\"$value->image\",\"$value->timesPlayed\");";
 			}
 		}
 		echo "</script>";
+
+		$url = 'https://'.$playerServer.'.api.pvp.net/api/lol/'.$playerServer.'/v2.5/league/by-summoner/'.$playerID.'?api_key='.$apiKey;
+		if(get_http_response_code($url) != "200")
+		{
+			echo "<script> alert(\"Error: ".get_http_response_code($url) . "\"); </script>";
+			return;
+		}
+		
+		$response = file_get_contents($url);
+		$league = json_decode($response)->$playerID;
+
+		$rankedLeague = $league[0]->name;
+		$rankedTier = $league[0]->tier;
 	}
 
+	function sortChamps($c1, $c2)
+	{
+		return ($c1->timesPlayed < $c2->timesPlayed);
+	}
 	function get_http_response_code($url) 
 	{
 	    $headers = get_headers($url);
