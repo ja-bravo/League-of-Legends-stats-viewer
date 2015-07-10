@@ -60,8 +60,9 @@
 	<section class="container main">
 		<div id="summonerInfo" class="row">
 			<div id="summImg" class="summInfo">
-				<image height="64" width="64" src="images/profileIcon/<?php echo $iconID; ?>.png" valign="middle"/>
-				<div id="level"><?php echo $level; ?></div>
+				<image id="tier" style="position: absolute; z-index: 100;" src="" id="tier" height="70" width="70">
+				<image id="icon" data-tier="<?php echo $rankedTier; ?>" height="64" width="64" src="images/profileIcon/<?php echo $iconID; ?>.png" valign="middle"/>
+				<div id="level"><span><?php echo $level; ?></span></div>
 			</div>
 			<div id="summName" class="summInfo">
 				<h3 id="user"><?php echo $name; ?></h3>

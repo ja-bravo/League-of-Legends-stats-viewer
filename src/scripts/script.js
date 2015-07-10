@@ -14,6 +14,37 @@ function checkInput()
 
 $(document).ready(function(){
 
+	switch($("#icon")[0].dataset.tier)
+	{
+		case "BRONZE":
+			$("#tier").attr("src","images/tiers/bronze.png");
+			break;
+
+		case "SILVER":
+			$("#tier").attr("src","images/tiers/silver.png");
+			break;
+
+		case "GOLD":
+			$("#tier").attr("src","images/tiers/gold.png");
+			break;
+
+		case "PLATINUM":
+			$("#tier").attr("src","images/tiers/platinum.png");
+			break;
+
+		case "DIAMOND":
+			$("#tier").attr("src","images/tiers/diamond.png");
+			break;
+
+		case "MASTER":
+			$("#tier").attr("src","images/tiers/master.png");
+			break;
+
+		case "CHALLENGER":
+			$("#tier").attr("src","images/tiers/challenger.png");
+			break;
+	}
+
 	$(".error").hide();
 
 	$('#search').click(function() {

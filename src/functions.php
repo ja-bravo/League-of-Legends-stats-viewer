@@ -15,7 +15,7 @@
 
 	function setSummoner($summonerName,$server)
 	{
-		global $apiKey, $playerID, $name, $iconID, $level, $playerServer;
+		global $apiKey, $playerID, $name, $iconID, $level, $playerServer,$rankedLeague,$rankedTier;
 		$playerServer = $server;
 		$summonerName = str_replace(' ','',$summonerName); // So if the user has spaces in it, it works.
 
@@ -33,11 +33,24 @@
 		$name = $stats->name;
 		$iconID = $stats->profileIconId;
 		$level = $stats->summonerLevel;
+
+		$url = 'https://'.$playerServer.'.api.pvp.net/api/lol/'.$playerServer.'/v2.5/league/by-summoner/'.$playerID.'?api_key='.$apiKey;
+		if(get_http_response_code($url) != "200")
+		{
+			echo "<script> alert(\"Error: ".get_http_response_code($url) . "\"); </script>";
+			return;
+		}
+		
+		$response = file_get_contents($url);
+		$league = json_decode($response)->$playerID;
+
+		$rankedLeague = $league[0]->name;
+		$rankedTier = $league[0]->tier;
 	}
 
 	function setRankedStats()
 	{
-		global $apiKey,$playerID,$idToImg,$playerServer,$champToTimes,$rankedLeague;
+		global $apiKey,$playerID,$idToImg,$playerServer,$champToTimes;
 
 		$url = 'https://'.$playerServer.'.api.pvp.net/api/lol/'.$playerServer.'/v1.3/stats/by-summoner/'.$playerID.'/ranked?season=SEASON2015&api_key='.$apiKey;
 		if(get_http_response_code($url) != "200")
@@ -100,25 +113,13 @@
 			}
 		}
 		echo "</script>";
-
-		$url = 'https://'.$playerServer.'.api.pvp.net/api/lol/'.$playerServer.'/v2.5/league/by-summoner/'.$playerID.'?api_key='.$apiKey;
-		if(get_http_response_code($url) != "200")
-		{
-			echo "<script> alert(\"Error: ".get_http_response_code($url) . "\"); </script>";
-			return;
-		}
-		
-		$response = file_get_contents($url);
-		$league = json_decode($response)->$playerID;
-
-		$rankedLeague = $league[0]->name;
-		$rankedTier = $league[0]->tier;
 	}
 
 	function sortChamps($c1, $c2)
 	{
 		return ($c1->timesPlayed < $c2->timesPlayed);
 	}
+
 	function get_http_response_code($url) 
 	{
 	    $headers = get_headers($url);
