@@ -5,7 +5,8 @@
 		public $id;
 		public $image;
 		public $timesPlayed;
-
+		public $title;
+		
 		function Champion()
 		{
 

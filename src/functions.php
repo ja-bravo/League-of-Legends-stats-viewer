@@ -83,6 +83,7 @@
 		    $idToImg[$id] = $image->full;
 
 		    $champ->name = $champion->name;
+		    $champ->title = $champion->title;
 		    $champ->id = $id;
 		    $champ->image = $image->full;
 
@@ -109,7 +110,7 @@
 		{
 			if(isset($value->timesPlayed))
 			{
-				echo "displayChampion(\"$value->name\",\"$value->id\",\"$value->image\",\"$value->timesPlayed\");";
+				echo "displayChampion(\"$value->title\",\"$value->name\",\"$value->id\",\"$value->image\",\"$value->timesPlayed\");";
 			}
 		}
 		echo "</script>";

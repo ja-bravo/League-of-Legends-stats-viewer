@@ -75,7 +75,7 @@
 				
 			</div>
 
-			<div class="col-xs-10" style="text-align: center;">
+			<div class="col-xs-10" id="info" style="text-align: center;">
 				<h1 style="margin: 0;">Champions played on ranked</h1>
 				<h2 style="margin: 0;">Click to see the stats</h2>
 			</div>
@@ -93,6 +93,22 @@
 			
 			</div>
 		</div>
+
+		<div class="row" id="championStats">
+			<div class="col-xs-2">
+				
+			</div>
+			<div class="col-xs-8">
+				<div id="champID"></div>
+				<button type="button" class="btn btn-primary btn-lg" id="btn">Show all champions</button>
+			</div>
+
+			<div class="col-xs-2">
+				
+			</div>
+			<hr class="separator"/>
+		</div>
+
 		<div class="row">
 			<footer class="col-xs-12">
 				<h4>© 2015 Jose Antonio Bravo</h4>

@@ -109,3 +109,33 @@ span
 {
 	margin-bottom: 4px;
 }
+
+#champTitle
+{
+	float: left; 
+	margin: 0 0 0 5px;
+}
+
+.separator
+{
+	clear: both;
+	width: 75%;
+	margin-top: 7%;
+}
+
+#championStats
+{
+	margin-top: 2%;
+}
+
+#btn
+{
+	float: right;
+	border-color: #111;
+	background-image: url("../images/header.jpg");
+}
+
+#btn:hover
+{
+	border-color: #6C6969;
+}
