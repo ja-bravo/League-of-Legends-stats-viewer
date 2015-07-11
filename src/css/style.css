@@ -135,7 +135,51 @@ span
 	background-image: url("../images/header.jpg");
 }
 
-#btn:hover
+#btn:hover, #btn:active
 {
 	border-color: #6C6969;
+}
+
+.btn:active
+{
+	border-color: #6C6969;
+}
+
+#winLossBar, #totalGames
+{
+	width: 20%;
+	height: 20px;
+	margin: 0 auto;
+}
+
+#winBar
+{
+	background-image: url("../images/win.png");
+	height: 10px;
+	float: left;
+}
+
+#lossBar
+{
+	background-image: url("../images/loss.png");
+	height: 10px;
+	float: right;
+}
+
+#victory
+{
+	width: 40%;
+	float: left;
+}
+
+#defeat
+{
+	width: 40%;
+	text-align: right;
+	float: right;
+}
+
+#winPercentage
+{
+	text-align: center;
 }

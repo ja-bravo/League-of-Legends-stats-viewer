@@ -94,20 +94,43 @@
 			</div>
 		</div>
 
-		<div class="row" id="championStats">
-			<div class="col-xs-2">
-				
-			</div>
-			<div class="col-xs-8">
-				<div id="champID"></div>
-				<button type="button" class="btn btn-primary btn-lg" id="btn">Show all champions</button>
+		<div id="championStats">
+			<div class="row">
+				<div class="col-xs-2">
+					
+				</div>
+				<div class="col-xs-8">
+					<div id="champID"></div>
+					<button type="button" class="btn btn-primary btn-lg" id="btn">Show all champions</button>
+				</div>
+
+				<div class="col-xs-2">
+					
+				</div>
+				<hr class="separator"/>
 			</div>
 
-			<div class="col-xs-2">
-				
+			<div class="row">
+				<div class="col-xs-12">
+					<div id="totalGames"><div id="victory"></div><div id="defeat"></div></div>
+					<div id="winLossBar"><div id="winBar"></div><div id="lossBar"></div></div>
+				</div>
 			</div>
-			<hr class="separator"/>
+
+			<div class="row">
+				<div class="col-xs-2">
+				</div>
+
+				<div id="winPercentage" class="col-xs-8">
+					<span>37%</span>
+				</div>
+
+				<div class="col-xs-2">
+				</div>
+			</div>
+
 		</div>
+		
 
 		<div class="row">
 			<footer class="col-xs-12">

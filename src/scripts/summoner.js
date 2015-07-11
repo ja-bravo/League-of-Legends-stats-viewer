@@ -106,8 +106,8 @@ $(document).ready(function(){
 	$("#btn").click(function(){
 		$("#championStats").hide(600);
 
-		$("#info").show(1200);
-		$(".champion").show(1200);
+		$("#info").show(800);
+		$(".champion").show(800);
 	});
 });
 
@@ -124,6 +124,11 @@ function displayStats(champion)
 		$("#champID").append("<h3 id=\"champTitle\" >"+champion.name+", "+champion.title+"</h3>");
 	}
 
+	$("#victory").html(champion.gamesWon + " Wins");
+	$("#defeat").html(champion.gamesLost + " Losses");
+
+	$("#winBar").css("width",champion.gamesWon/champion.totalGames*100+"%");
+	$("#lossBar").css("width",champion.gamesLost/champion.totalGames*100+"%");
 	$("#championStats").show(100);
 
 }
