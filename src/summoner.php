@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title> stats</title>
+	<title> stats</title> <!-- Add summoner name -->
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">	
 	<link rel="stylesheet" href="css/style.css"/>
@@ -104,6 +104,9 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="scripts/script.js"></script>
+	<script src="scripts/summoner.js"></script>
+
+	<div id="summData" data-id="<?php echo $playerID ?>" data-name="<?php echo  strtolower($summoner)?>" data-server="<?php echo $server ?>"></div>
 </body>
 </html>
 

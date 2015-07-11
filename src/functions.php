@@ -109,7 +109,7 @@
 		{
 			if(isset($value->timesPlayed))
 			{
-				echo "displayChampion(\"$value->name\",\"$value->image\",\"$value->timesPlayed\");";
+				echo "displayChampion(\"$value->name\",\"$value->id\",\"$value->image\",\"$value->timesPlayed\");";
 			}
 		}
 		echo "</script>";
