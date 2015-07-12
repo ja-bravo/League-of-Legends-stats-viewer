@@ -96,16 +96,15 @@
 
 		<div id="championStats">
 			<div class="row">
-				<div class="col-xs-2">
+				<div class="col-xs-0 col-md-2">
 					
 				</div>
-				<div class="col-xs-8">
+				<div class="col-xs-12 col-md-8">
 					<div id="champID"></div>
-					<button type="button" class="btn btn-primary btn-lg" id="btn">Show all champions</button>
 				</div>
 
-				<div class="col-xs-2">
-					
+				<div class="col-xs-12 col-md-2">
+					<button type="button" class="btn btn-primary btn-lg" id="btn">Show all champions</button>
 				</div>
 				<hr class="separator"/>
 			</div>
@@ -159,8 +158,3 @@
 	<div id="summData" data-id="<?php echo $playerID ?>" data-name="<?php echo  strtolower($summoner)?>" data-server="<?php echo $server ?>"></div>
 </body>
 </html>
-
-
-<?php 
-	setRankedStats();
- ?>

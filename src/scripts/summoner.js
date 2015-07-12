@@ -31,6 +31,8 @@ function Champion()
 $(document).ready(function(){
 	$("#championStats").hide();
 	$("title").html($("#summData")[0].dataset.name + " stats");
+
+	prepareChampions();
 	switch($("#icon")[0].dataset.tier)
 	{
 		case "BRONZE":
@@ -124,6 +126,7 @@ function displayStats(champion)
 	{
 		$("#champID").append("<h4 id=\"champTitle\" >"+champion.name+", "+champion.title+"</h4>");
 		$("#btn").css("width","100%");
+		$("#btn").css("margin","10px 0 15px 0");
 		$("#victory").html(champion.gamesWon);
 		$("#defeat").html(champion.gamesLost);
 	}
@@ -165,4 +168,15 @@ function displayChampion(title,name,id,image,times)
 function showError()
 {
 	$("#champions").html("<h1> This player has no ranked games this season, play some to track!");
+}
+
+function prepareChampions()
+{
+	var playerID = $("#summData")[0].dataset.id;
+	var playerServer = $("#summData")[0].dataset.server;
+
+	$.post("setChampions.php", {'PLAYER_ID': playerID, 'SERVER': playerServer},function(response) {
+			var result = jQuery.parseJSON(response);
+			console.dir(result);
+	});
 }
