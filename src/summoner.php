@@ -122,13 +122,24 @@
 				</div>
 
 				<div id="winPercentage" class="col-xs-8">
-					<span>37%</span>
+
 				</div>
 
 				<div class="col-xs-2">
 				</div>
 			</div>
 
+			<div class="row">
+				<div id="stats" class="col-xs-2">
+				</div>
+
+				<div id="stats" class="col-xs-8">
+				
+				</div>
+
+				<div id="stats" class="col-xs-2">
+				</div>
+			</div>
 		</div>
 		
 

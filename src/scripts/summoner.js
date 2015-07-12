@@ -21,6 +21,8 @@ function Champion()
 	var totalDamageTaken;
 	var totalDamageDealt;
 
+	var minionsKilled;
+
 	var image;
 	var name;
 	var title;
@@ -28,6 +30,7 @@ function Champion()
 
 $(document).ready(function(){
 	$("#championStats").hide();
+	$("title").html($("#summData")[0].dataset.name + " stats");
 	switch($("#icon")[0].dataset.tier)
 	{
 		case "BRONZE":
@@ -73,7 +76,7 @@ $(document).ready(function(){
 
 		$.post("championData.php", {'ID': champID,'PLAYER_ID': playerID, 'SERVER': playerServer},function(response) {
 			var result = jQuery.parseJSON(response);
-
+			
 			var champion = new Champion();
 			champion.totalKills = result.totalChampionKills;
 			champion.totalDeaths = result.totalDeathsPerSession;
@@ -94,6 +97,8 @@ $(document).ready(function(){
 			champion.totalPhysicalDamage = result.totalPhysicalDamageDealt;
 			champion.totalDamageTaken = result.totalDamageTaken;
 			champion.totalDamageDealt = result.totalDamageDealt;
+
+			champion.minionsKilled = result.totalMinionKills;
 
 			champion.image = image;
 			champion.name = name;
@@ -118,17 +123,31 @@ function displayStats(champion)
 	if($(window).width() < 960)
 	{
 		$("#champID").append("<h4 id=\"champTitle\" >"+champion.name+", "+champion.title+"</h4>");
+		$("#btn").css("width","100%");
+		$("#victory").html(champion.gamesWon);
+		$("#defeat").html(champion.gamesLost);
 	}
 	else
 	{
 		$("#champID").append("<h3 id=\"champTitle\" >"+champion.name+", "+champion.title+"</h3>");
+		$("#victory").html(champion.gamesWon + " Wins");
+		$("#defeat").html(champion.gamesLost + " Losses");
 	}
 
-	$("#victory").html(champion.gamesWon + " Wins");
-	$("#defeat").html(champion.gamesLost + " Losses");
+	
 
 	$("#winBar").css("width",champion.gamesWon/champion.totalGames*100+"%");
 	$("#lossBar").css("width",champion.gamesLost/champion.totalGames*100+"%");
+
+	$("#winPercentage").html((champion.gamesWon/champion.totalGames*100).toFixed(0)+"%");
+
+	var medianKills =  champion.totalKills/champion.totalGames;
+	var medianDeaths = champion.totalDeaths/champion.totalGames;
+	var medianAssists = champion.totalAssists/champion.totalGames;
+
+	var medianCS = champion.minionsKilled/champion.totalGames;
+
+	$("#stats").html("<h3>"+ medianKills.toFixed(1)+"/"+medianDeaths.toFixed(1)+"/"+medianAssists.toFixed(1)+"</h3>");
 	$("#championStats").show(100);
 
 }
