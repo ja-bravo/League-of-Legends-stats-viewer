@@ -4,7 +4,7 @@
 		public $name;
 		public $id;
 		public $image;
-		public $timesPlayed;
+		public $stats;
 		public $title;
 		
 		function Champion()

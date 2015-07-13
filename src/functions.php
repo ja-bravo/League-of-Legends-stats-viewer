@@ -9,8 +9,6 @@
 	$level;
 	$rankedLeague;
 	$rankedTier;
-	$idToImg = array();
-	$champToTimes = array();
 	$playerServer;
 
 

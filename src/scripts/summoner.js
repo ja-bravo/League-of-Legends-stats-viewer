@@ -1,33 +1,14 @@
 
 function Champion()
 {
-	var totalKills;
-	var totalDeaths;
-	var totalAssists;
-
-	var doubleKills;
-	var tripleKills;
-	var quadraKills;
-	var pentaKills;
-
-	var gamesWon;
-	var gamesLost;
-	var totalGames;
-
-	var turretsKilled;
-
-	var totalMagicDamage;
-	var totalPhysicalDamage;
-	var totalDamageTaken;
-	var totalDamageDealt;
-
-	var minionsKilled;
-
+	var id;
 	var image;
 	var name;
 	var title;
+	var stats;
 }
 
+var champions = [];
 $(document).ready(function(){
 	$("#championStats").hide();
 	$("title").html($("#summData")[0].dataset.name + " stats");
@@ -69,45 +50,6 @@ $(document).ready(function(){
 		$("#info").hide(600);
 
 		var champID = $(this)[0].dataset.id;
-		var playerID = $("#summData")[0].dataset.id;
-		var playerServer = $("#summData")[0].dataset.server;
-
-		var image = $(this)[0].currentSrc;
-		var name = $(this)[0].dataset.name;
-		var title = $(this)[0].dataset.title;
-
-		$.post("championData.php", {'ID': champID,'PLAYER_ID': playerID, 'SERVER': playerServer},function(response) {
-			var result = jQuery.parseJSON(response);
-			
-			var champion = new Champion();
-			champion.totalKills = result.totalChampionKills;
-			champion.totalDeaths = result.totalDeathsPerSession;
-			champion.totalAssists = result.totalAssists;
-
-			champion.doubleKills = result.totalDoubleKills;
-			champion.tripleKills = result.totalTripleKills;
-			champion.quadraKills = result.totalQuadraKills;
-			champion.pentakills  = result.totalPentaKills;
-
-			champion.gamesWon = result.totalSessionsWon;
-			champion.gamesLost = result.totalSessionsLost;
-			champion.totalGames = result.totalSessionsPlayed;
-
-			champion.turretsKilled = result.totalTurretsKilled;
-
-			champion.totalMagicDamage = result.totalMagicDamageDealt;
-			champion.totalPhysicalDamage = result.totalPhysicalDamageDealt;
-			champion.totalDamageTaken = result.totalDamageTaken;
-			champion.totalDamageDealt = result.totalDamageDealt;
-
-			champion.minionsKilled = result.totalMinionKills;
-
-			champion.image = image;
-			champion.name = name;
-			champion.title = title;
-
-			displayStats(champion);
-		});
 	});
 
 	$("#btn").click(function(){
@@ -160,9 +102,9 @@ function setUser(user,level)
 	$("#user").html(user);
 }
 
-function displayChampion(title,name,id,image,times)
+function displayChampion(title,name,id,image)
 {
-	$("#champions").append("<image class=\"champion\" data-title=\""+title+"\" data-id=\""+id+"\" data-name=\""+name+"\" data-timesPlayed=\""+times+"\" height=\"64\" width=\"64\" src=\"images/champions/"+image+"\" valign=\"middle\"/>");
+	$("#champions").append("<image class=\"champion\" data-title=\""+title+"\" data-id=\""+id+"\" data-name=\""+name+"\" height=\"64\" width=\"64\" src=\"images/champions/"+image+"\" valign=\"middle\"/>");
 }
 
 function showError()
@@ -176,7 +118,26 @@ function prepareChampions()
 	var playerServer = $("#summData")[0].dataset.server;
 
 	$.post("setChampions.php", {'PLAYER_ID': playerID, 'SERVER': playerServer},function(response) {
-			var result = jQuery.parseJSON(response);
-			console.dir(result);
+		console.log(response);
+		var result = jQuery.parseJSON(response);
+		for(var i = 0; i < result.length; i++)
+		{
+			var champion = new Champion();
+		
+			champion.id = result[i].id;
+			champion.image = result[i].image;
+			champion.name = result[i].name;
+			champion.title = result[i].title;
+			champion.stats = result[i].stats;
+
+			champions.push(champion);
+			displayChampion(champion.title,champion.name,champion.id,champion.image);
+		}
 	});
 }
+
+$(document).bind("ajaxSend", function(){
+	$("#champions").html("<image id=\"loading\" src=\"images/loading.gif\" style=\"margin: auto; width: 99%;height: 30px;\"/>");
+ }).bind("ajaxComplete", function(){
+	$("#loading").hide();
+ });

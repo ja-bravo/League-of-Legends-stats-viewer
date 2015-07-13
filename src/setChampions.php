@@ -1,21 +1,33 @@
 <?php 
+	include("connection.php");
 	include("functions.php");
+	function customError($errno, $errstr) 
+	{
+		echo json_encode($errstr);
+	}
+	set_error_handler("customError");
+	$playerID = $_POST['PLAYER_ID'];
+	$playerServer = $_POST['SERVER'];
 
-	$playerID = 19150065; //$_POST['PLAYER_ID'];
-	$playerServer = "euw"; //$_POST['SERVER'];
-
-	setRankedStats();
-	function setRankedStats()
+	getRankedStats();
+	function getRankedStats()
 	{
 		global $apiKey,$playerID,$playerServer;
-		$champToTimes = array();
-		$idToImg = array();
 
 		$url = 'https://'.$playerServer.'.api.pvp.net/api/lol/'.$playerServer.'/v1.3/stats/by-summoner/'.$playerID.'/ranked?season=SEASON2015&api_key='.$apiKey;
-		if(get_http_response_code($url) != "200")
+
+		$httpCode = get_http_response_code($url);
+		if($httpCode != "200")
 		{
-			echo "<script> showError(\"noRanked\"); </script>";
-			return;
+			if($httpCode == "404")
+			{
+				echo "<script> showError(\"noRanked\"); </script>";		
+			}
+			else
+			{
+				echo "ERROR: $httpCode";
+				return;
+			}
 		}
 
 		$response = file_get_contents($url);
@@ -23,61 +35,37 @@
 
 		$championsPlayed = $rankedStats->champions;
 
-		$url = 'https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?champData=image&api_key='.$apiKey;
-		if(get_http_response_code($url) != "200")
-		{
-			echo "<script> alert(\"Error: ".get_http_response_code($url) . "\"); </script>";
-			return;
-		}
-		
+		$url = 'https://global.api.pvp.net/api/lol/static-data/'.$playerServer.'/v1.2/champion?champData=image&api_key='.$apiKey;
+
 		$response = file_get_contents($url);
 		$champions = json_decode($response)->data;
 
-		foreach ($champions as $champion) 
+		$playerChampions = array();
+		foreach( $champions as $key => $champion ) 
 		{
-			$champ = new Champion();
-			$id = $champion->id;
-		    $image = $champion->image;
-		    
-		    $idToImg[$id] = $image->full;
-
-		    $champ->name = $champion->name;
-		    $champ->title = $champion->title;
-		    $champ->id = $id;
-		    $champ->image = $image->full;
-
-		    $champToTimes[$champ->id] = $champ;
-		}
-
-		for($i = 0; $i < count($championsPlayed); $i++)
-		{
-			$championStat = $championsPlayed[$i]->stats;
-			$champID = $championsPlayed[$i]->id;
-			if($champID == 0)
+			foreach( $championsPlayed as $key => $championPlayed ) 
 			{
-				$totalGames = $championStat->totalSessionsPlayed;
-			}
-			else
-			{
-				$champToTimes[$champID]->timesPlayed = $championStat->totalSessionsPlayed;
+				if($championPlayed->id == $champion->id)
+				{
+					$champ = new Champion();
+
+					$champ->name = $champion->name;
+					$champ->id = $champion->id;
+					$champ->title = $champion->title;
+					$champ->image = $champion->image->full;
+					$champ->stats = $championPlayed->stats;
+					array_push($playerChampions,$champ);
+					break;
+				}
 			}
 		}
 
-		usort($champToTimes,"sortChamps");
-		$max = count($champToTimes);
-		for($i = 0; $i < $max; $i++)
-		{
-			if(empty($champToTimes[$i]->timesPlayed))
-			{
-				unset($champToTimes[$i]);
-			}
-		}
-
-		echo json_encode($champToTimes);
+		usort($playerChampions,"sortChamps");
+		echo json_encode($playerChampions);
 	}
 
 	function sortChamps($c1, $c2)
 	{
-		return ($c1->timesPlayed < $c2->timesPlayed);
+		return ($c1->stats->totalSessionsPlayed < $c2->stats->totalSessionsPlayed);
 	}
  ?>

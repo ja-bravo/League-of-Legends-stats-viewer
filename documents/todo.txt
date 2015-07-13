@@ -1,0 +1,1 @@
+If a request fails, show an error to the user.
