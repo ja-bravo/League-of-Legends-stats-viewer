@@ -1,11 +1,6 @@
 <?php 
 	include("connection.php");
 	include("functions.php");
-	function customError($errno, $errstr) 
-	{
-		echo json_encode($errstr);
-	}
-	set_error_handler("customError");
 	$playerID = $_POST['PLAYER_ID'];
 	$playerServer = $_POST['SERVER'];
 
@@ -15,29 +10,34 @@
 		global $apiKey,$playerID,$playerServer;
 
 		$url = 'https://'.$playerServer.'.api.pvp.net/api/lol/'.$playerServer.'/v1.3/stats/by-summoner/'.$playerID.'/ranked?season=SEASON2015&api_key='.$apiKey;
+		$response = file_get_contents($url);
 
-		$httpCode = get_http_response_code($url);
-		if($httpCode != "200")
+		if(requestFailed($response,$url))
 		{
-			if($httpCode == "404")
-			{
-				echo "<script> showError(\"noRanked\"); </script>";		
-			}
-			else
-			{
-				echo "ERROR: $httpCode";
-				return;
-			}
+			$error = error_get_last();
+			$error = $error['message'];
+
+			$errorCode = substr($error,strpos($error,"/1.1")+5,3);
+			handleError($errorCode,$url);
+			return;
 		}
 
-		$response = file_get_contents($url);
 		$rankedStats = json_decode($response);
-
 		$championsPlayed = $rankedStats->champions;
 
 		$url = 'https://global.api.pvp.net/api/lol/static-data/'.$playerServer.'/v1.2/champion?champData=image&api_key='.$apiKey;
-
 		$response = file_get_contents($url);
+		
+		if(requestFailed($response,$url))
+		{
+			$error = error_get_last();
+			$error = $error['message'];
+
+			$errorCode = substr($error,strpos($error,"/1.1")+5,3);
+			handleError($errorCode,$url);
+			return;
+		}
+
 		$champions = json_decode($response)->data;
 
 		$playerChampions = array();

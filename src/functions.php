@@ -19,13 +19,17 @@
 		$summonerName = str_replace(' ','',$summonerName); // So if the user has spaces in it, it works.
 
 		$url = 'https://'.$server.'.api.pvp.net/api/lol/'.$server.'/v1.4/summoner/by-name/' . $summonerName . '?api_key=' . $apiKey;
-		if(get_http_response_code($url) != "200")
+		$response = @file_get_contents($url);
+
+		if(requestFailed($response,$url))
 		{
-			echo "<script> alert(\"Player not found\"); </script>";
+			$error = error_get_last();
+			$error = $error['message'];
+
+			$errorCode = substr($error,strpos($error,"/1.1")+5,3);
+			handleError($errorCode,$url);
 			return;
 		}
-
-		$response = file_get_contents($url);
 
 		$stats = json_decode($response)->$summonerName;
 		$playerID = $stats->id;
@@ -33,23 +37,40 @@
 		$iconID = $stats->profileIconId;
 		$level = $stats->summonerLevel;
 
-		$url = 'https://'.$playerServer.'.api.pvp.net/api/lol/'.$playerServer.'/v2.5/league/by-summoner/'.$playerID.'?api_key='.$apiKey;
-		if(get_http_response_code($url) != "200")
+		$url = 'https://'.$playerServer.'.api.pvp.net/api/lol/'.$playerServer.'/v2.5/league/by-summoner/'.$playerID.'?api_key='.$apiKey;		
+		$response = @file_get_contents($url);
+
+		if(requestFailed($response,$url))
 		{
-			echo "<script> alert(\"Error: ".get_http_response_code($url) . "\"); </script>";
+			$error = error_get_last();
+			$error = $error['message'];
+
+			$errorCode = substr($error,strpos($error,"/1.1")+5,3);
+			handleError($errorCode,$url);
 			return;
 		}
-		
-		$response = file_get_contents($url);
+
 		$league = json_decode($response)->$playerID;
 
 		$rankedLeague = $league[0]->name;
 		$rankedTier = $league[0]->tier;
 	}
 
-	function get_http_response_code($url) 
+	function requestFailed($response,$url) 
 	{
-	    $headers = get_headers($url);
-	    return substr($headers[0], 9, 3);
+		if(!$response)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	function handleError($errorCode,$url)
+	{
+		echo "<script> handleError($errorCode); </script>";
+		$time = time();
+		$time = date("H:i:s | d-m-y");
+		$url = substr($url,0,strlen($url) - 36);
+		error_log("ERROR: $errorCode @ $time | URL: $url**REDACTED** \r\n",3,"log/log.txt");
 	}
  ?>

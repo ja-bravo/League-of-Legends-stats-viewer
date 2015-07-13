@@ -118,8 +118,8 @@ function prepareChampions()
 	var playerServer = $("#summData")[0].dataset.server;
 
 	$.post("setChampions.php", {'PLAYER_ID': playerID, 'SERVER': playerServer},function(response) {
-		console.log(response);
 		var result = jQuery.parseJSON(response);
+		
 		for(var i = 0; i < result.length; i++)
 		{
 			var champion = new Champion();
