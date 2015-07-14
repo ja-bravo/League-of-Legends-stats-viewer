@@ -46,11 +46,11 @@ $(document).ready(function(){
 			break;
 	}
 
-	$(".champion").click(function(){
+	$("#champions").on('click','.champion',function(){
 		
 		$(".champion").hide(600);
 		$("#info").hide(600);
-		displayStats(champions[268]);
+		displayStats(champions[this.dataset.id]);
 	});
 
 	$("#btn").click(function(){
@@ -119,7 +119,7 @@ function displayStats(champion)
 	var medianCS = stats.totalMinionsKilled/stats.totalSessionsPlayed;
 
 	$("#stats").html("<h3>"+ medianKills.toFixed(1)+"/"+medianDeaths.toFixed(1)+"/"+medianAssists.toFixed(1)+"</h3>");
-	$("#championStats").show(100);
+	$("#championStats").show(800);
 
 }
 
@@ -172,6 +172,3 @@ function handleError(errorCode)
 {
  	requestCode = errorCode;
 }
-
-// REMOVE AFTER DEBUGGING
-monitorEvents(document.body);
