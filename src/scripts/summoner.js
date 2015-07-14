@@ -47,10 +47,10 @@ $(document).ready(function(){
 	}
 
 	$(".champion").click(function(){
+		
 		$(".champion").hide(600);
 		$("#info").hide(600);
-
-		var champID = $(this)[0].dataset.id;
+		displayStats(champions[268]);
 	});
 
 	$("#btn").click(function(){
@@ -89,35 +89,34 @@ $(document).ready(function(){
 
 function displayStats(champion)
 {
-	$("#champID").html("<img id=\"champIMG\" style=\"float: left;\" src=\""+champion.image+"\" height=\"64\" width=\"64\" valign=\"middle\"/>");
+	var stats = champion.stats;
+	$("#champID").html("<img id=\"champIMG\" style=\"float: left;\" src=\"images/champions/"+champion.image+"\" height=\"64\" width=\"64\" valign=\"middle\"/>");
 	
 	if($(window).width() < 960)
 	{
 		$("#champID").append("<h4 id=\"champTitle\" >"+champion.name+", "+champion.title+"</h4>");
 		$("#btn").css("width","100%");
 		$("#btn").css("margin","10px 0 15px 0");
-		$("#victory").html(champion.gamesWon);
-		$("#defeat").html(champion.gamesLost);
+		$("#victory").html(stats.totalSessionsWon);
+		$("#defeat").html(stats.totalSessionsLost);
 	}
 	else
 	{
 		$("#champID").append("<h3 id=\"champTitle\" >"+champion.name+", "+champion.title+"</h3>");
-		$("#victory").html(champion.gamesWon + " Wins");
-		$("#defeat").html(champion.gamesLost + " Losses");
-	}
+		$("#victory").html(stats.totalSessionsWon + " Wins");
+		$("#defeat").html(stats.totalSessionsLost + " Losses");
+	}	
 
-	
+	$("#winBar").css("width",stats.totalSessionsWon/stats.totalSessionsPlayed*100+"%");
+	$("#lossBar").css("width",stats.totalSessionsLost/stats.totalSessionsPlayed*100+"%");
 
-	$("#winBar").css("width",champion.gamesWon/champion.totalGames*100+"%");
-	$("#lossBar").css("width",champion.gamesLost/champion.totalGames*100+"%");
+	$("#winPercentage").html((stats.totalSessionsWon/stats.totalSessionsPlayed*100).toFixed(0)+"%");
 
-	$("#winPercentage").html((champion.gamesWon/champion.totalGames*100).toFixed(0)+"%");
+	var medianKills =  stats.totalChampionKills/stats.totalSessionsPlayed;
+	var medianDeaths = stats.totalDeathsPerSession/stats.totalSessionsPlayed;
+	var medianAssists = stats.totalAssists/stats.totalSessionsPlayed;
 
-	var medianKills =  champion.totalKills/champion.totalGames;
-	var medianDeaths = champion.totalDeaths/champion.totalGames;
-	var medianAssists = champion.totalAssists/champion.totalGames;
-
-	var medianCS = champion.minionsKilled/champion.totalGames;
+	var medianCS = stats.totalMinionsKilled/stats.totalSessionsPlayed;
 
 	$("#stats").html("<h3>"+ medianKills.toFixed(1)+"/"+medianDeaths.toFixed(1)+"/"+medianAssists.toFixed(1)+"</h3>");
 	$("#championStats").show(100);
@@ -157,7 +156,7 @@ function prepareChampions()
 			champion.title = result[i].title;
 			champion.stats = result[i].stats;
 
-			champions.push(champion);
+			champions[champion.id] = champion;
 			displayChampion(champion.title,champion.name,champion.id,champion.image);
 		}
 	});
@@ -173,3 +172,6 @@ function handleError(errorCode)
 {
  	requestCode = errorCode;
 }
+
+// REMOVE AFTER DEBUGGING
+monitorEvents(document.body);
