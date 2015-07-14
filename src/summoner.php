@@ -7,6 +7,12 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">	
 	<link rel="stylesheet" href="css/style.css"/>
 	<link href='http://fonts.googleapis.com/css?family=Arvo:700italic' rel='stylesheet' type='text/css'>
+
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="scripts/script.js"></script> 	
+	<script src="scripts/summoner.js"></script>
 </head>
 <body>
 	<?php 
@@ -149,12 +155,6 @@
 		</div>
 	</section>
 	
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script src="scripts/script.js"></script>
-	<script src="scripts/summoner.js"></script>
-
 	<div id="summData" data-id="<?php echo $playerID ?>" data-name="<?php echo  strtolower($summoner)?>" data-server="<?php echo $server ?>"></div>
 </body>
 </html>

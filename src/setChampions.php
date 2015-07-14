@@ -18,7 +18,7 @@
 			$error = $error['message'];
 
 			$errorCode = substr($error,strpos($error,"/1.1")+5,3);
-			handleError($errorCode,$url);
+			handleError($errorCode,$url,"champions on ranked");
 			return;
 		}
 
@@ -34,7 +34,7 @@
 			$error = $error['message'];
 
 			$errorCode = substr($error,strpos($error,"/1.1")+5,3);
-			handleError($errorCode,$url);
+			handleError($errorCode,$url,"champions");
 			return;
 		}
 

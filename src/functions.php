@@ -27,7 +27,7 @@
 			$error = $error['message'];
 
 			$errorCode = substr($error,strpos($error,"/1.1")+5,3);
-			handleError($errorCode,$url);
+			handleError($errorCode,$url,"name and playerID");
 			return;
 		}
 
@@ -46,7 +46,15 @@
 			$error = $error['message'];
 
 			$errorCode = substr($error,strpos($error,"/1.1")+5,3);
-			handleError($errorCode,$url);
+			
+			if($errorCode == "404" || $errorCode == "503")
+			{
+				handleError(405,$url,"league and tier");
+			}
+			else
+			{
+				handleError($errorCode,$url,"league and tier");
+			}
 			return;
 		}
 
@@ -65,12 +73,12 @@
 		return false;
 	}
 
-	function handleError($errorCode,$url)
+	function handleError($errorCode,$url,$part)
 	{
 		echo "<script> handleError($errorCode); </script>";
 		$time = time();
 		$time = date("H:i:s | d-m-y");
 		$url = substr($url,0,strlen($url) - 36);
-		error_log("ERROR: $errorCode @ $time | URL: $url**REDACTED** \r\n",3,"log/log.txt");
+		error_log("ERROR: $errorCode @ $time | $part | URL: $url**REDACTED** \r\n",3,"log/log.txt");
 	}
  ?>

@@ -9,6 +9,7 @@ function Champion()
 }
 
 var champions = [];
+var requestCode;
 $(document).ready(function(){
 	$("#championStats").hide();
 	$("title").html($("#summData")[0].dataset.name + " stats");
@@ -58,6 +59,32 @@ $(document).ready(function(){
 		$("#info").show(800);
 		$(".champion").show(800);
 	});
+
+	switch (requestCode)
+ 	{
+ 		case 404:
+ 			$("#info").html("<h1 style=\"text-align: center;\"> 404 not found </h1>");
+ 			$("#champions").html("<h3 style=\"text-align: center;\">  This summoner is not registered. </h3>");
+ 			$("#champions").append("<h3 style=\"text-align: center;\">  Please check the server/spelling </h3>");
+ 			$("#summonerInfo").hide();
+ 			break;
+
+		case 405:
+			$("#info").hide();
+			$("#tier").hide();
+ 			$("#champions").html("<h3 style=\"text-align: center;\">  This summoner has not played any ranked game. </h3>");
+ 			break;
+
+ 		case 429:
+ 			$("#info").html("<h1 style=\"text-align: center;\"> 429 Rate limit exceeded </h1>");
+ 			$("#champions").html("<h3 style=\"text-align: center;\">  Sorry, we have exceeded the rate limit. Check again in a while! </h3>");
+ 			$("#summonerInfo").hide();
+ 			$(".champion").hide();
+ 			break;
+
+ 		default:
+ 			break;
+ 	}
 });
 
 function displayStats(champion)
@@ -141,3 +168,8 @@ $(document).bind("ajaxSend", function(){
  }).bind("ajaxComplete", function(){
 	$("#loading").hide();
  });
+
+function handleError(errorCode)
+{
+ 	requestCode = errorCode;
+}
