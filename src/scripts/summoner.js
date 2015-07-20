@@ -46,18 +46,17 @@ $(document).ready(function(){
 			break;
 	}
 
-	$("#champions").on('click','.champion',function(){
-		
-		$(".champion").hide(600);
-		$("#info").hide(600);
+	$("#champions").on('click','.champion',function(){	
+		$(".champion").hide(400);
+		$("#info").hide(400);
 		displayStats(champions[this.dataset.id]);
 	});
 
 	$("#btn").click(function(){
-		$("#championStats").hide(600);
+		$("#championStats").hide(400);
 
-		$("#info").show(800);
-		$(".champion").show(800);
+		$("#info").show(600);
+		$(".champion").show(600);
 	});
 
 	switch (requestCode)
@@ -115,10 +114,19 @@ function displayStats(champion)
 	var medianKills =  stats.totalChampionKills/stats.totalSessionsPlayed;
 	var medianDeaths = stats.totalDeathsPerSession/stats.totalSessionsPlayed;
 	var medianAssists = stats.totalAssists/stats.totalSessionsPlayed;
+	var kdaRatio = ((medianKills + medianAssists)/medianDeaths).toFixed(2);
 
 	var medianCS = stats.totalMinionsKilled/stats.totalSessionsPlayed;
 
-	$("#stats").html("<h3>"+ medianKills.toFixed(1)+"/"+medianDeaths.toFixed(1)+"/"+medianAssists.toFixed(1)+"</h3>");
+	$("#tKDA").html(medianKills.toFixed(2)+" / "+medianDeaths.toFixed(2)+" / "+medianAssists.toFixed(2));
+	$("#tDamage").html((stats.totalDamageDealt/stats.totalSessionsPlayed).toFixed(0));
+	$("#tCreeps").html((stats.totalMinionKills/stats.totalSessionsPlayed).toFixed(0));
+
+	
+	$("#tDK").html(stats.totalDoubleKills);
+	$("#tTK").html(stats.totalTripleKills);
+	$("#tQK").html(stats.totalQuadraKills);
+	$("#tPK").html(stats.totalPentaKills);
 	$("#championStats").show(800);
 
 }

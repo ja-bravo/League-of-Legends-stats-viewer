@@ -76,4 +76,12 @@ $(document).ready(function(){
 
 		$("#chosenServer").html(this.innerHTML + " <span class=\"glyphicon glyphicon-collapse-down\"></span>");
 	});
+
+	$(document).on('keyup', function(e) 
+ 	{
+	    if (e.which == 13 || e.keyCode == 13) 
+	    {
+	        $("#search").click();
+	    }
+	});
 });

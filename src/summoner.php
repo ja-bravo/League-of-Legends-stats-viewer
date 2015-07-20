@@ -135,14 +135,43 @@
 			</div>
 
 			<div class="row">
-				<div id="stats" class="col-xs-2">
+				<div class="col-xs-2">
 				</div>
 
-				<div id="stats" class="col-xs-8">
-				
+				<div id="stats" class="col-xs-12 col-md-8">
+					<h1 style="text-align: center;">Stats per game</h1>
+					<table >
+	                    <tr>
+	                        <th>KDA</th>
+							<th>Total Damage</th>
+							<th>Creeps</th>
+	                    </tr>
+	                    <tr>
+	                       <td id="tKDA"></td>
+							<td id="tDamage"></td>
+							<td id="tCreeps"></td>
+	                    </tr>
+	                </table>
+					
+					<h1 style="text-align: center;">Total</h1>
+					<table>
+						<tr>
+							<th>Double Kills</th>
+							<th>Triple Kills</th>
+							<th>Quadra Kills</th>
+							<th>Penta Kills</th>
+						</tr>
+
+						<tr>
+							<td id="tDK"></td>
+							<td id="tTK"></td>
+							<td id="tQK"></td>
+							<td id="tPK"></td>
+						</tr>
+					</table>
 				</div>
 
-				<div id="stats" class="col-xs-2">
+				<div  class="col-xs-2">
 				</div>
 			</div>
 		</div>

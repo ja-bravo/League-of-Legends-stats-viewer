@@ -45,4 +45,5 @@ Temporary Items
 
 connection.php
 log.txt
-log/*
+src/log/*
+src/log/log.txt
